@@ -1,1 +1,3 @@
 # hi-swift
+
+Learning Swift.
