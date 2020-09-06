@@ -2,6 +2,15 @@ import Cocoa
 
 var str = "Hello, playground"
 
+//: --------------------------------------------------
+//: # Strings and Characters
+
+let ch: Character = "a"
+let s: String = "a"
+
+print(s == String(ch))
+
+//: --------------------------------------------------
 //: # Clousures
 
 let names = ["Chris", "Alex", "Ewa", "Barry", "Daniella"]
@@ -95,3 +104,72 @@ func serve2(customer customerProvider: @autoclosure () -> String) {
 }
 serve2(customer: customersInLine.remove(at: 0))
 // Prints "Now serving Ewa!"
+
+//: --------------------------------------------------
+//: # Enumerations
+
+//: ## Associated Values
+
+enum Barcode {
+    case upc(Int, Int, Int, Int)
+    case qrCode(String)
+}
+
+func printBarcode(_ barcode: Barcode) {
+    switch barcode {
+    case let .upc(numberSystem, manufacturer, product, check):
+        print("UPC: \(numberSystem), \(manufacturer), \(product), \(check)")
+    case let .qrCode(productCode):
+        print("QR code: \(productCode)")
+    }
+}
+
+var productBarcode = Barcode.upc(8, 85909, 51226, 3)
+
+printBarcode(productBarcode)
+
+switch productBarcode {
+case .upc(let numberSystem, let manufacturer, var product, let check):
+    product += 1  // this won't change productBarcode
+    print("UPC: \(numberSystem), \(manufacturer), \(product), \(check)")
+case let .qrCode(productCode):
+    print("QR code: \(productCode)")
+}
+
+printBarcode(productBarcode)
+
+//: ## Raw Values
+
+enum ASCIIControlCharacter : Character {
+    case tab = "\t"
+    case lf = "\n"
+    case cr = "\r"
+}
+
+enum Planet: Int {
+    case mercury = 1, venus, earth, mars, jupiter, saturn, uranus, nepture
+}
+
+print(Planet.earth)  // prints earth
+print(Planet.earth.rawValue)  // prints 3
+
+enum SpecialStr: String {
+    case foo = "a", bar, baz
+}
+
+print(SpecialStr.foo)  // prints foo
+print(SpecialStr.foo.rawValue)  // print a
+print(SpecialStr.bar)  // print bar
+print(SpecialStr.bar.rawValue)  // print bar
+
+let possiblePlanet7 = Planet(rawValue: 7)
+print(possiblePlanet7 ?? "unknown")  // prints uranus
+
+let possiblePlanet70 = Planet(rawValue: 70)
+print(possiblePlanet70 ?? "unknown")  // prints unknown
+
+let possibleSpecialStrBaz = SpecialStr(rawValue: "baz")
+print(possibleSpecialStrBaz ?? "blah")  // prints baz
+
+let possibleSpecialStrZzz = SpecialStr(rawValue: "zzz")
+print(possibleSpecialStrZzz ?? "blah")  // prints blah
