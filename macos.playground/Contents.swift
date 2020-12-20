@@ -2,16 +2,63 @@ import Cocoa
 
 var str = "Hello, playground"
 
-//: --------------------------------------------------
-//: # Strings and Characters
+print("-------------------------------------------------- Tuples")
+
+let http404Error = (404, "Not Found")
+print(type(of: http404Error))
+print("http404Error is \(http404Error):")
+print(http404Error.0)
+print(http404Error.1)
+
+let http200Status = (statusCode: 200, description: "OK")
+print(type(of: http200Status))
+print("http200Status is \(http200Status)")
+print(http200Status.statusCode)
+print(http200Status.description)
+
+print("-------------------------------------------------- Optionals")
+
+print("type(of: Int(\"123\"))", type(of: Int("123")))  // Int?
+if let i = Int("123") {
+    print(type(of: i))  // Int
+}
+if var i = Int("123") {
+    i += 1000
+    print(type(of: i))
+}
+// print(type(of: i))  // Cannot find 'i' in scope
+
+let implicitlyUnwrappedOptionalString : String! = "foo"
+print("type(of: implicitlyUnwrappedOptionalString)",
+      type(of: implicitlyUnwrappedOptionalString),
+      "<= let implicitlyUnwrappedOptionalString : String! = \"foo\"")
+print("implicitlyUnwrappedOptionalString!", implicitlyUnwrappedOptionalString!)
+let unwrappedString: String = implicitlyUnwrappedOptionalString
+print("unwrappedString", unwrappedString)
+print("type(of: unwrappedString)", type(of: unwrappedString))
+
+print("-------------------------------------------------- Error Handling")
+
+func canThrowAnError() throws {
+}
+
+// canThrowAnError()  // doesn't compile - Call can throw but is not marked by 'try'
+
+do {
+    try canThrowAnError()
+    // canThrowAnError()  // doesn't compile - Call can throw but is not marked by 'try'
+} catch {
+    // error handling
+}
+
+print("-------------------------------------------------- Strings and Characters")
 
 let ch: Character = "a"
 let s: String = "a"
 
 print(s == String(ch))
 
-//: --------------------------------------------------
-//: # Clousures
+print("-------------------------------------------------- Clousures")
 
 let names = ["Chris", "Alex", "Ewa", "Barry", "Daniella"]
 
@@ -105,8 +152,7 @@ func serve2(customer customerProvider: @autoclosure () -> String) {
 serve2(customer: customersInLine.remove(at: 0))
 // Prints "Now serving Ewa!"
 
-//: --------------------------------------------------
-//: # Enumerations
+print("-------------------------------------------------- Enumerations")
 
 //: ## Associated Values
 
